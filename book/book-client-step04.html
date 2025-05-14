@@ -15,12 +15,12 @@
         <div class="form-grid">
           <div class="form-group">
             <label for="title">제목:</label>
-            <input type="text" name="title" id="title" />
+            <input type="text" name="title" id="title" required />
           </div>
 
           <div class="form-group">
             <label for="author">저자:</label>
-            <input type="text" name="author" id="author" />
+            <input type="text" name="author" id="author" required />
           </div>
 
           <div class="form-group">
@@ -31,6 +31,7 @@
               id="isbn"
               placeholder="978**********"
               pattern="\d{13}"
+              required
             />
           </div>
 
@@ -42,12 +43,13 @@
               id="price"
               min="1000"
               max="300000"
+              required
             />
           </div>
 
           <div class="form-group">
             <label for="publishDate">발행 날짜:</label>
-            <input type="date" name="publishDate" id="publishDate" />
+            <input type="date" name="publishDate" id="publishDate" required />
           </div>
 
           <button type="submit">도서 등록</button>
@@ -65,37 +67,25 @@
             <th>ISBN</th>
             <th>가격</th>
             <th>발행날짜</th>
-            <th>액션</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody id="bookTableBody"></tbody>
       </table>
     </div>
 
     <script>
-      //전역변수
       const API_BASE_URL = "http://localhost:8080";
-
-      //DOM 엘리먼트 가져오기
       const bookForm = document.getElementById("bookForm");
       const bookTableBody = document.getElementById("bookTableBody");
 
-      //Document Load 이벤트 처리하기
       document.addEventListener("DOMContentLoaded", function () {
         loadBooks();
       });
 
-      //Form Submit 이벤트 처리하기
       bookForm.addEventListener("submit", function (event) {
-        //기본으로 설정된 Event가 동작하지 않도록 하기 위함
         event.preventDefault();
-        console.log("Form 제출 되었음...");
 
-        //FormData 객체생성 <form>엘리먼트를 객체로 변환
         const bookFormData = new FormData(bookForm);
-        bookFormData.forEach((value, key) => {
-          console.log(key + ' = ' +  value);
-        });
 
         const bookData = {
           title: bookFormData.get("title").trim(),
@@ -103,14 +93,49 @@
           isbn: bookFormData.get("isbn").trim(),
           price: parseInt(bookFormData.get("price")),
           publishDate: bookFormData.get("publishDate")
-        };        
+        };
 
+        fetch(`${API_BASE_URL}/books`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(bookData)
+        })
+        .then(response => {
+          if (!response.ok) throw new Error("도서 등록 실패");
+          return response.json();
+        })
+        .then(data => {
+          loadBooks();
+          bookForm.reset();
+        })
+        .catch(error => {
+          console.error("에러 발생:", error);
+        });
       });
 
       function loadBooks() {
-        console.log("책 목록 로드 중.....");
+        fetch(`${API_BASE_URL}/books`)
+          .then(response => response.json())
+          .then(data => {
+            bookTableBody.innerHTML = "";
+            data.forEach(book => {
+              const row = document.createElement("tr");
+              row.innerHTML = `
+                <td>${book.title}</td>
+                <td>${book.author}</td>
+                <td>${book.isbn}</td>
+                <td>${book.price}</td>
+                <td>${book.publishDate}</td>
+              `;
+              bookTableBody.appendChild(row);
+            });
+          })
+          .catch(error => {
+            console.error("도서 목록 로드 실패:", error);
+          });
       }
     </script>
-
   </body>
 </html>
