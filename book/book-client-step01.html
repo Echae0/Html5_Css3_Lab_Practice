@@ -1,52 +1,51 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>책 관리 시스템</title>
-  </head>
-  <body>
-    <h1>책 관리 시스템</h1>
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도서 관리 시스템</title>
+</head>
+<body>
+    <h1>도서 관리 시스템</h1>
+    
     <div>
-      <h2>도서 등록</h2>
-      <form>
-        <label for="title">제목:</label>
-        <input type="text" name="title" id="title" />
-
-        <label for="author">저자:</label>
-        <input type="text" name="author" id="author" />
-
-        <label for="isbn">ISBN:</label>
-        <input type="text" name="isbn" id="isbn"
-        placeholder="978**********"
-        pattern="\d{13}" />
-
-        <label for="price">가격:</label>
-        <input type="number" min="1000" max="300000" name="price" id="price"/>
-
-        <label for="publishDate">발행 날짜:</label>
-        <input type="date" name="publishDate" id="publishDate" />
-
-        <button type="submit">도서 등록</button>
-      </form>
+        <h2>도서 등록</h2>
+        <form>
+            <label>제목:</label>
+            <input type="text" name="title">
+            
+            <label>저자:</label>
+            <input type="text" name="author">
+            
+            <label>ISBN:</label>
+            <input type="text" name="isbn">
+            
+            <label>가격:</label>
+            <input type="number" name="price">
+            
+            <label>출판일:</label>
+            <input type="date" name="publishDate">
+            
+            <button type="submit">도서 등록</button>
+        </form>
     </div>
-
+    
     <div>
-      <h2>도서 목록</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>이름</th>
-            <th>저자</th>
-            <th>ISBN</th>
-            <th>가격</th>
-            <th>발행날짜</th>
-            <th>액션</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+        <h2>도서 목록</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>저자</th>
+                    <th>ISBN</th>
+                    <th>가격</th>
+                    <th>출판일</th>
+                    <th>액션</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </div>
-  </body>
+</body>
 </html>
