@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>도서 관리 시스템</title>
-    <link rel="stylesheet" href="css/form06.css">
+    <link rel="stylesheet" href="css/form.css">
 </head>
 <body>
     <h1>도서 관리 시스템</h1>
@@ -15,19 +15,19 @@
             <div class="form-row">
                 <div class="form-group">
                     <label>제목:</label>
-                    <input type="text" name="title" >
+                    <input type="text" name="title" required>
                 </div>
                 
                 <div class="form-group">
                     <label>저자:</label>
-                    <input type="text" name="author" >
+                    <input type="text" name="author" required>
                 </div>
             </div>
             
             <div class="form-row">
                 <div class="form-group">
                     <label>ISBN:</label>
-                    <input type="text" name="isbn" >
+                    <input type="text" name="isbn" required>
                 </div>
                 
                 <div class="form-group">
@@ -77,12 +77,17 @@
                 <textarea name="description" rows="4" cols="50"></textarea>
             </div>
             
-            <button type="submit">도서 등록</button>
+            <div class="button-group">
+                <button type="submit">도서 등록</button>
+                <button type="button" class="cancel-btn" onclick="resetForm()" style="display: none;">취소</button>
+                <span class="error-message" id="formError"></span>
+            </div>
         </form>
     </div>
     
     <div>
         <h2>도서 목록</h2>
+        <div id="loadingMessage" class="loading" style="display: none;">로딩 중...</div>
         <table id="bookTable">
             <thead>
                 <tr>
@@ -100,6 +105,15 @@
         </table>
     </div>
     
-    <script src="js/form06.js"></script>
+    <!-- 도서 상세 정보 모달 -->
+    <div id="bookDetailModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeBookDetail()">&times;</span>
+            <h2>도서 상세 정보</h2>
+            <div id="bookDetailContent"></div>
+        </div>
+    </div>
+    
+    <script src="js/form.js"></script>
 </body>
 </html>
